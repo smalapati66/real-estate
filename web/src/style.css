@@ -1,0 +1,93 @@
+:root {
+  --bg: #e6e4df;
+  --ink: #3b3a37;
+  --quiet: #8d8a83;
+  --paper: #f7f5f0;
+  font-family: "Comic Sans MS", "Comic Sans", "Comic Neue", "Chalkboard SE", cursive;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+main {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+}
+
+.frame {
+  /* Largest square that fits, leaving room for the painted border and footer. */
+  --size: min(82vw, calc((100dvh - 5rem) / 1.094), 820px); /* 1.094 = board + two border pads */
+  /* Border margin: BORDER_PAD (border.ts) cells out of 256. */
+  --pad: calc(var(--size) * 12 / 256);
+  position: relative;
+  width: var(--size);
+  aspect-ratio: 1 / 1;
+  margin: var(--pad);
+  background: var(--paper);
+  transition: opacity 200ms ease, filter 200ms ease;
+}
+
+.frame canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* The border sits behind the board, spilling out by one pad on each side. */
+.frame #border {
+  inset: auto;
+  left: calc(-1 * var(--pad));
+  top: calc(-1 * var(--pad));
+  width: calc(100% + 2 * var(--pad));
+  height: calc(100% + 2 * var(--pad));
+  pointer-events: none;
+}
+
+.frame[data-state="ready"] canvas { cursor: crosshair; }
+
+.frame:not([data-state="ready"]) {
+  opacity: 0.6;
+  filter: grayscale(0.35);
+}
+.frame:not([data-state="ready"]) canvas { cursor: not-allowed; }
+
+footer {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.05rem;
+  min-height: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.swatch {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.15);
+}
+
+.quiet {
+  color: var(--quiet);
+  font-size: 0.85rem;
+}
+.quiet:empty { display: none; }

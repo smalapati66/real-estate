@@ -1,0 +1,23 @@
+{
+  "name": "shared-canvas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:web": "npm --prefix web run dev",
+    "dev:worker": "npm --prefix worker run dev",
+    "typecheck": "npm --prefix worker run typecheck && npm --prefix web run typecheck",
+    "test": "npm --prefix worker test",
+    "build": "npm --prefix web run build",
+    "deploy:worker": "npm --prefix worker run deploy",
+    "deploy:web": "npm --prefix web run deploy",
+    "reset": "node scripts/reset.mjs",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.4.11",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.5",
+    "vitest": "^4.1.12",
+    "wrangler": "^4.156.0"
+  }
+}

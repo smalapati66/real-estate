@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <title>mine</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23f7f5f0'/%3E%3Ccircle cx='8' cy='8' r='5' fill='%23e0603a'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <main>
+      <div class="frame" id="frame" data-state="connecting">
+        <canvas id="border" aria-hidden="true"></canvas>
+        <canvas id="board" width="256" height="256" aria-label="shared canvas"></canvas>
+        <canvas id="preview" width="256" height="256" aria-hidden="true"></canvas>
+      </div>
+      <footer>
+        <span class="swatch" id="swatch" aria-label="your colour"></span>
+        <span id="coverage">0.00%</span>
+        <span class="quiet" id="present"></span>
+        <span class="quiet" id="status" role="status" aria-live="polite">connecting…</span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "shared-canvas-api",
+  "main": "src/index.ts",
+  // >= 2026-04-07 enables web_socket_auto_reply_to_close.
+  "compatibility_date": "2026-08-15",
+  "observability": { "enabled": true },
+
+  "durable_objects": {
+    "bindings": [{ "name": "CANVAS_ROOM", "class_name": "CanvasRoom" }]
+  },
+  // Declarative replacement for the legacy `migrations` array (the two are
+  // mutually exclusive). The legacy equivalent would be:
+  //   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["CanvasRoom"] }]
+  "exports": {
+    "CanvasRoom": { "type": "durable-object", "storage": "sqlite" }
+  },
+
+  "vars": {
+    // Comma-separated, exact origins allowed to open the WebSocket.
+    // Local dev overrides this in .dev.vars.
+    "ALLOWED_ORIGINS": "https://art.sidmalapati.com,https://shared-canvas.pages.dev",
+    // How long edits may sit in memory before being written to SQLite.
+    "FLUSH_INTERVAL_MS": "2000"
+  }
+  // Secret (not in this file): ADMIN_TOKEN — `npx wrangler secret put ADMIN_TOKEN`
+}

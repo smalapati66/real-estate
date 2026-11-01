@@ -1,0 +1,4 @@
+# Copy to worker/.dev.vars for `wrangler dev`. Never commit .dev.vars.
+ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+# Any random string of 32+ characters, e.g. `openssl rand -base64 33`
+ADMIN_TOKEN=replace-with-a-long-random-string-for-local-dev
