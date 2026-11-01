@@ -19,7 +19,7 @@
   "vars": {
     // Comma-separated, exact origins allowed to open the WebSocket.
     // Local dev overrides this in .dev.vars.
-    "ALLOWED_ORIGINS": "https://art.sidmalapati.com,https://shared-canvas.pages.dev",
+    "ALLOWED_ORIGINS": "https://realestate.sidmalapati.com,https://shared-canvas.pages.dev",
     // How long edits may sit in memory before being written to SQLite.
     "FLUSH_INTERVAL_MS": "2000"
   }
