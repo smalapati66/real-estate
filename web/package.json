@@ -7,6 +7,6 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=shared-canvas --branch=main --commit-dirty=true"
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=shared-canvas-7he --branch=main --commit-dirty=true"
   }
 }
