@@ -17,9 +17,10 @@
   },
 
   "vars": {
-    // Comma-separated, exact origins allowed to open the WebSocket.
+    // Comma-separated origins allowed to open the WebSocket. `https://*.x.pages.dev`
+    // matches one label, i.e. every deployment URL of that Pages project.
     // Local dev overrides this in .dev.vars.
-    "ALLOWED_ORIGINS": "https://realestate.sidmalapati.com,https://shared-canvas-7he.pages.dev",
+    "ALLOWED_ORIGINS": "https://realestate.sidmalapati.com,https://shared-canvas-7he.pages.dev,https://*.shared-canvas-7he.pages.dev",
     // How long edits may sit in memory before being written to SQLite.
     "FLUSH_INTERVAL_MS": "2000"
   }

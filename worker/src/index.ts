@@ -40,10 +40,21 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 
-/** Exact match against a comma-separated allow-list. Browsers always send Origin on WebSocket upgrades. */
+/**
+ * Match against a comma-separated allow-list. Entries are exact origins, or
+ * `https://*.example.pages.dev`, where `*` is exactly one DNS label. That
+ * covers each Pages deployment's own URL (`<hash>.<project>.pages.dev`).
+ * Browsers always send Origin on WebSocket upgrades.
+ */
 export function originAllowed(origin: string | null, allowList: string | undefined): boolean {
   if (!origin || !allowList) return false;
-  return allowList.split(",").map((o) => o.trim()).filter(Boolean).includes(origin);
+  return allowList.split(",").map((o) => o.trim()).filter(Boolean).some((entry) => {
+    const star = entry.indexOf("://*.");
+    if (star === -1) return entry === origin;
+    const scheme = entry.slice(0, star + 3), suffix = entry.slice(star + 4); // suffix keeps its leading "."
+    if (!origin.startsWith(scheme) || !origin.endsWith(suffix)) return false;
+    return /^[a-z0-9-]+$/.test(origin.slice(scheme.length, origin.length - suffix.length));
+  });
 }
 
 async function checkAdmin(request: Request, secret: string | undefined): Promise<Response | null> {

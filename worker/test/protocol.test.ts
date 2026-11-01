@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { CELL_COUNT } from "../../shared/constants";
 import { decodeSnapshot, decodeUpdate, encodeSnapshot, encodeUpdate, toRuns } from "../../shared/protocol";
 import { Board } from "../src/board";
+import { originAllowed } from "../src/index";
 import { parseClientMessage } from "../src/validate";
 
 describe("binary frames", () => {
@@ -57,5 +58,20 @@ describe("client message validation", () => {
     expect(parseClientMessage("not json")).toBeNull();
     expect(parseClientMessage(new ArrayBuffer(4))).toBeNull();
     expect(parseClientMessage(JSON.stringify({ t: "hello" }) + " ".repeat(2000))).toBeNull();
+  });
+});
+
+describe("origin allow-list", () => {
+  const list = "https://art.test, https://*.proj.pages.dev";
+  it("matches exact origins and one-label wildcards only", () => {
+    expect(originAllowed("https://art.test", list)).toBe(true);
+    expect(originAllowed("https://a27f5e34.proj.pages.dev", list)).toBe(true);
+    expect(originAllowed("https://proj.pages.dev", list)).toBe(false);
+    expect(originAllowed("https://a.b.proj.pages.dev", list)).toBe(false);
+    expect(originAllowed("https://evilproj.pages.dev", list)).toBe(false);
+    expect(originAllowed("http://a27f5e34.proj.pages.dev", list)).toBe(false);
+    expect(originAllowed("https://x.proj.pages.dev.evil.com", list)).toBe(false);
+    expect(originAllowed("https://art.test.evil.com", list)).toBe(false);
+    expect(originAllowed(null, list)).toBe(false);
   });
 });
